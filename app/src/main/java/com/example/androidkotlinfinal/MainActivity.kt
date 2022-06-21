@@ -15,17 +15,22 @@ import com.example.androidkotlinfinal.R
 import com.example.androidkotlinfinal.databinding.ActivityMainBinding
 import com.example.androidkotlinfinal.ui.map.LocationProvider
 import com.example.androidkotlinfinal.ui.map.PermissionsManager
-import com.google.android.gms.maps.MapFragment
+import com.google.android.gms.maps.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),OnMapReadyCallback {
 
     var mapFragment: MapFragment? = null
+
+    private val locationProvider = LocationProvider(this)
+    private val permissionManager = PermissionsManager(this, locationProvider)
+
 
 
     private var binding: ActivityMainBinding? = null
     private var mAuth: FirebaseAuth? = null
+    private lateinit var map: GoogleMap
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mAuth = FirebaseAuth.getInstance()
@@ -44,5 +49,23 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
+
+        val mapFragment = supportFragmentManager
+            .findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        map = googleMap
+
+        //1
+        locationProvider.liveLocation.observe(this) { latLng ->
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
+        }
+
+        //2
+        permissionManager.requestUserLocation()
+
+        map.uiSettings.isZoomControlsEnabled = true
     }
 }
