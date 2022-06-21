@@ -10,10 +10,110 @@
         android:id="@+id/logoutButton"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginTop="32dp"
-        android:text="Logout"
+        android:layout_marginTop="36dp"
+        android:text="@string/logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/routeHistory" />
+
+    <TextView
+        android:id="@+id/profileTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="@string/statistics_of_today"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:text="@string/date"
+        app:layout_constraintBaseline_toBaselineOf="@+id/dateInput"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/dateInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/dateContent"
+        app:layout_constraintStart_toEndOf="@+id/dateText"
+        app:layout_constraintTop_toBottomOf="@+id/profileTitle" />
+
+    <TextView
+        android:id="@+id/kilometersDaily"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="25dp"
+        android:text="@string/kilometers"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dateText" />
+
+    <TextView
+        android:id="@+id/kilometersDailyData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="25dp"
+        android:text="@string/kilometersNumber"
+        app:layout_constraintStart_toEndOf="@+id/kilometersDaily"
+        app:layout_constraintTop_toBottomOf="@+id/dateInput" />
+
+    <TextView
+        android:id="@+id/stepsDaily"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="25dp"
+        android:text="@string/steps"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kilometersDaily" />
+
+    <TextView
+        android:id="@+id/stepsDailyData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="25dp"
+        android:text="@string/stepsNumber"
+        app:layout_constraintStart_toEndOf="@+id/stepsDaily"
+        app:layout_constraintTop_toBottomOf="@+id/kilometersDailyData" />
+
+    <Button
+        android:id="@+id/routeHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="@string/check_route_history"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dailyTime" />
+
+    <TextView
+        android:id="@+id/dailyTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="25dp"
+        android:text="@string/total_daily_time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stepsDaily" />
+
+    <TextView
+        android:id="@+id/totalDailyTimeData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="25dp"
+        android:text="@string/totalDailyTime"
+        app:layout_constraintStart_toEndOf="@+id/dailyTime"
+        app:layout_constraintTop_toBottomOf="@+id/stepsDailyData" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
