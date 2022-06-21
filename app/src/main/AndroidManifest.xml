@@ -22,9 +22,14 @@
         android:theme="@style/Theme.AndroidKotlinFinal"
         tools:targetApi="31">
         <activity
+            android:name=".HistoryRoutesActivity"
+            android:label="Route History"
+            android:exported="false" />
+        <activity
             android:name=".ProfileActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:label="Profile"
+            android:screenOrientation="portrait" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -43,19 +48,19 @@
         <activity
             android:name=".ResetPasswordActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".RegisterActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".LoginActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
+            android:label="Dashboard"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

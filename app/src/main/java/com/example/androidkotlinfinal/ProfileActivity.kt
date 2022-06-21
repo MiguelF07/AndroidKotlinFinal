@@ -25,6 +25,12 @@ class ProfileActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        val routesButton = findViewById<View>(R.id.routeHistory) as Button
+        routesButton.setOnClickListener { view: View? ->
+            val intent = Intent(this, HistoryRoutesActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 
