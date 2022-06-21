@@ -55,7 +55,7 @@ class LocationProvider(private val activity: AppCompatActivity) {
         override fun onLocationResult(result: LocationResult) {
             //1
             val currentLocation = result.lastLocation
-            val latLng = currentLocation?.let { LatLng(it.latitude, currentLocation.longitude) }
+            val latLng = LatLng(currentLocation?.latitude ?: 10.0, currentLocation?.longitude ?: 10.0)
 
             //2
             val lastLocation = locations.lastOrNull()
@@ -68,9 +68,7 @@ class LocationProvider(private val activity: AppCompatActivity) {
             }
 
             //4
-            if (latLng != null) {
-                locations.add(latLng)
-            }
+            locations.add(latLng)
             liveLocations.value = locations
         }
     }
