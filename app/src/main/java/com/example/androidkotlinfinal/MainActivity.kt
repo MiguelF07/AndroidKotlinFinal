@@ -18,10 +18,13 @@ import com.example.androidkotlinfinal.ui.map.PermissionsManager
 import com.google.android.gms.maps.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity(),OnMapReadyCallback {
 
     var mapFragment: MapFragment? = null
+    val db = Firebase.firestore
 
     private val locationProvider = LocationProvider(this)
     private val permissionManager = PermissionsManager(this, locationProvider)
