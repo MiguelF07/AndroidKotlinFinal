@@ -89,6 +89,14 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback, SensorEventListener
         binding!!.endButton.setOnClickListener {
             val localKilometers = findViewById<View>(R.id.kilometersNumber) as TextView
             val localSteps = findViewById<View>(R.id.stepsNumber) as TextView
+            val currentTime = findViewById<View>(R.id.timeValue) as TextView
+            stopwatch.minutes = 2
+            val workoutMinutes = stopwatch.minutes.toInt()
+            val workoutHours = stopwatch.hours.toInt()
+            var totalMinutes = 0
+            if (workoutHours!=0) {
+                totalMinutes = (workoutHours * 60) + workoutMinutes
+            }
             val docIdRef = mAuth!!.uid?.let { db.collection("users").document(it) }
             docIdRef!!.get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -99,17 +107,20 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback, SensorEventListener
                     ).show()
                     val document = task.result
                     println("PRINTT")
-                    println(document)
                     val newKm = document.data?.get("kilometersDaily").toString().toInt() + localKilometers.text.toString().toInt()
                     val newSteps = document.data?.get("stepsDaily").toString().toInt() + localSteps.text.toString().toInt()
+                    val newMinutes = document.data?.get("timeDaily").toString().toInt() + totalMinutes
+                    println(newMinutes)
                     println(newKm.toString())
                     mAuth!!.uid?.let { it1 ->
                         db.collection("users")
                             .document(it1)
-                            .update(mapOf("kilometersDaily" to newKm,"stepsDaily" to newSteps))
+                            .update(mapOf("kilometersDaily" to newKm,"stepsDaily" to newSteps,"timeDaily" to newMinutes))
                     };
                     localKilometers.text = "0"
                     localSteps.text = "0"
+                    currentTime.text = "0"
+
 
 
                 } else {
@@ -147,9 +158,12 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback, SensorEventListener
     }
 
     private fun updateUi(ui:MVP.Ui){
+        println("PRINTISTO")
+        println(ui.currentLocation.toString())
         if(ui.currentLocation != null && ui.currentLocation != map.cameraPosition.target){
+            println("entrei aqui")
             map.isMyLocationEnabled = true
-            map.animateCamera(CameraUpdateFactory.newLatLngZoom(ui.currentLocation, 18f))
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(map.cameraPosition.target, 18f))
         }
         binding?.kilometersNumber?.text = ui.formattedDistance
         binding?.stepsNumber?.text = ui.formattedSteps

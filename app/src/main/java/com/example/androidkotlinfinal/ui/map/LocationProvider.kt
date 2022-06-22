@@ -48,14 +48,16 @@ class LocationProvider(private val activity: AppCompatActivity) {
     private val locationCallback = object : LocationCallback() {
         override fun onLocationResult(result: LocationResult) {
             val currentLocation = result.lastLocation
-            val latLng = LatLng(currentLocation?.latitude ?: 40.0, currentLocation?.longitude ?: -8.0)
+            val latLng = LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
             val lastLocation = locations.lastOrNull()
             if (lastLocation != null) {
                 distance +=
                     SphericalUtil.computeDistanceBetween(lastLocation, latLng).roundToInt()
                 liveDistance.value = distance
             }
-            locations.add(latLng)
+            if (latLng != null) {
+                locations.add(latLng)
+            }
             liveLocations.value = locations
         }
     }
