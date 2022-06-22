@@ -11,9 +11,13 @@ import com.example.androidkotlinfinal.R
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
     private var mAuth: FirebaseAuth? = null
+    val db = Firebase.firestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -40,11 +44,16 @@ class RegisterActivity : AppCompatActivity() {
                             "Successfully Registered",
                             Toast.LENGTH_LONG
                         )
+                        val user = mAuth!!.currentUser
+                        var uuid = user?.uid.toString()
+                        val map = mapOf("kilometersDaily" to 0, "stepsDaily" to 0,"timeDaily" to 0,"currentKms" to 0,"currentSteps" to 0, "currentTime" to 0,"uuid" to uuid)
+                        db.collection("users").document(uuid).set(map)
+
+
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                         finish()
                     } else {
-                        println(task.exception.toString())
                         AlertDialog.Builder(this)
                             .setTitle("Registration Failed")
                             .setPositiveButton("Ok", null)

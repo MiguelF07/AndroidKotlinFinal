@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FinalProject</string>
+    <string name="app_name">Now You Run</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -8,12 +8,12 @@
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
+    <string name="welcome">"Welcome!"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="statistics">Current Statistics</string>
-    <string name="kilometers">Kilometers:</string>
+    <string name="kilometers">Meters:</string>
     <string name="kilometersNumber">0</string>
     <string name="start">Start</string>
     <string name="end">End</string>
@@ -21,12 +21,14 @@
     <string name="stepsNumber">0</string>
     <string name="profile">Profile</string>
     <string name="elapsed_time">Elapsed Time:</string>
-    <string name="timeData">00:00:00</string>
+    <string name="timeData">0</string>
     <string name="logout">Logout</string>
-    <string name="statistics_of_today">Statistics of Today</string>
+    <string name="statistics_of_today">Overall Statistics</string>
     <string name="date">Date:</string>
     <string name="dateContent">21/06/2022</string>
     <string name="check_route_history">Check Route History</string>
-    <string name="total_daily_time">Total Daily Time:</string>
-    <string name="totalDailyTime">02:00:03</string>
+    <string name="total_daily_time">Total Exercise Time:</string>
+    <string name="totalDailyTime">0</string>
+    <string name="distance_value">%d</string>
+    <string name="steps_value">%d</string>
 </resources>

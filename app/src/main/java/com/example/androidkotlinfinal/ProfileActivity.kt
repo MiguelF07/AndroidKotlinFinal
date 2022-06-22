@@ -2,19 +2,20 @@ package com.example.androidkotlinfinal
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.example.androidkotlinfinal.LoginActivity
-import com.example.androidkotlinfinal.R
-import com.example.androidkotlinfinal.databinding.FragmentNotificationsBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+
 
 class ProfileActivity : AppCompatActivity() {
+    val db = Firebase.firestore
+    private var mAuth: FirebaseAuth? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
@@ -26,12 +27,39 @@ class ProfileActivity : AppCompatActivity() {
             finish()
         }
 
-        val routesButton = findViewById<View>(R.id.routeHistory) as Button
-        routesButton.setOnClickListener { view: View? ->
-            val intent = Intent(this, HistoryRoutesActivity::class.java)
-            startActivity(intent)
+        mAuth = FirebaseAuth.getInstance()
+
+        val kilometersData = findViewById<View>(R.id.kilometersDailyData) as TextView
+        val stepsData = findViewById<View>(R.id.stepsDailyData) as TextView
+        val timeData = findViewById<View>(R.id.totalTimeData) as TextView
+
+
+        var firestore: FirebaseFirestore
+        firestore = FirebaseFirestore.getInstance()
+        val docIdRef = mAuth!!.uid?.let { db.collection("users").document(it) }
+        docIdRef!!.get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val document = task.result
+                document.data?.get("kilometersDaily")
+                kilometersData.text = document.data?.get("kilometersDaily").toString()
+                stepsData.text = document.data?.get("stepsDaily").toString()
+                timeData.text = document.data?.get("timeDaily").toString()
+
+
+            } else {
+                Log.d(mAuth!!.uid, "Failed with: ", task.exception)
+            }
         }
+
     }
+
+
+
+    interface OnDataReceiveCallback {
+        fun onDataReceived(kilometers: Double, steps: Double, time:Double)
+    }
+
+
 
 
 }

@@ -14,13 +14,10 @@ import kotlin.math.roundToInt
 
 @SuppressLint("MissingPermission")
 
-class LocationProvider(private val activity: AppCompatActivity) {
-
-    private val fusedLocation
-            by lazy { LocationServices.getFusedLocationProviderClient(activity) }
+class Provider(private val activity: AppCompatActivity) {
+    private val fusedLocation by lazy { LocationServices.getFusedLocationProviderClient(activity) }
 
     private val locations = mutableListOf<LatLng>()
-
     val liveLocation = MutableLiveData<LatLng>()
     private var distance = 0;
     val liveLocations = MutableLiveData<List<LatLng>>()
@@ -28,19 +25,16 @@ class LocationProvider(private val activity: AppCompatActivity) {
 
     fun getUserLocation() {
         fusedLocation.lastLocation.addOnSuccessListener { location ->
-            val locationLatLong = LatLng(location.latitude, location.longitude)
-            locations.add(locationLatLong)
-            liveLocation.value = locationLatLong
+            val latLong = LatLng(location.latitude, location.longitude)
+            locations.add(latLong)
+            liveLocation.value = latLong
         }
     }
 
-    fun trackUser() {
-        //1
+    fun startTracking() {
         val locationRequest = LocationRequest.create()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        locationRequest.interval = 5000
-
-        //2
+        locationRequest.interval = 2000
         fusedLocation.requestLocationUpdates(locationRequest, locationCallback,
             Looper.getMainLooper())
     }
@@ -53,22 +47,17 @@ class LocationProvider(private val activity: AppCompatActivity) {
 
     private val locationCallback = object : LocationCallback() {
         override fun onLocationResult(result: LocationResult) {
-            //1
             val currentLocation = result.lastLocation
-            val latLng = LatLng(currentLocation?.latitude ?: 10.0, currentLocation?.longitude ?: 10.0)
-
-            //2
+            val latLng = LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
             val lastLocation = locations.lastOrNull()
-
-            //3
             if (lastLocation != null) {
                 distance +=
                     SphericalUtil.computeDistanceBetween(lastLocation, latLng).roundToInt()
                 liveDistance.value = distance
             }
-
-            //4
-            locations.add(latLng)
+            if (latLng != null) {
+                locations.add(latLng)
+            }
             liveLocations.value = locations
         }
     }
