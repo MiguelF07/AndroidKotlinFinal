@@ -91,7 +91,6 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback, SensorEventListener
         }
 
         presenter.onMapLoaded()
-        //1
         lp.liveLocation.observe(this) { latLng ->
             map.animateCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.Builder().target(latLng).zoom(16f).build()))
         }

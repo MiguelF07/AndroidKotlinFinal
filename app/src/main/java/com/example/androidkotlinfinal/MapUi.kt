@@ -33,9 +33,9 @@ class MapUi {
                 val current = ui.value
                 ui.value = current?.copy(pathing = locations)
             }
-            locationProvider.liveLocation.observe(activity) { currentLocation ->
+            locationProvider.liveLocation.observe(activity) { newLocation ->
                 val current = ui.value
-                ui.value = current?.copy(currentLocation = currentLocation)
+                ui.value = current?.copy(currentLocation = newLocation)
             }
             locationProvider.liveDistance.observe(activity) { distance ->
                 val current = ui.value
