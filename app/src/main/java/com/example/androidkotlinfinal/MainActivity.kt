@@ -92,12 +92,14 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback, SensorEventListener
             val localKilometers = findViewById<View>(R.id.kilometersNumber) as TextView
             val localSteps = findViewById<View>(R.id.stepsNumber) as TextView
             val currentTime = findViewById<View>(R.id.timeValue) as TextView
-            stopwatch.minutes = 2
             val workoutMinutes = stopwatch.minutes.toInt()
             val workoutHours = stopwatch.hours.toInt()
             var totalMinutes = 0
             if (workoutHours!=0) {
                 totalMinutes = (workoutHours * 60) + workoutMinutes
+            }
+            else {
+                totalMinutes = workoutMinutes
             }
             val docIdRef = mAuth!!.uid?.let { db.collection("users").document(it) }
             docIdRef!!.get().addOnCompleteListener { task ->
