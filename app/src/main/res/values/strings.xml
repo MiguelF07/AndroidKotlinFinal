@@ -23,10 +23,10 @@
     <string name="elapsed_time">Elapsed Time:</string>
     <string name="timeData">00:00:00</string>
     <string name="logout">Logout</string>
-    <string name="statistics_of_today">Statistics of Today</string>
+    <string name="statistics_of_today">Overall Statistics</string>
     <string name="date">Date:</string>
     <string name="dateContent">21/06/2022</string>
     <string name="check_route_history">Check Route History</string>
-    <string name="total_daily_time">Total Daily Time:</string>
-    <string name="totalDailyTime">02:00:03</string>
+    <string name="total_daily_time">Total Exercise Time:</string>
+    <string name="totalDailyTime">0</string>
 </resources>

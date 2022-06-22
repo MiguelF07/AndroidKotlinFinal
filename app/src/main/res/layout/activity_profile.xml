@@ -27,25 +27,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/dateText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:text="@string/date"
-        app:layout_constraintBaseline_toBaselineOf="@+id/dateInput"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/dateInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/dateContent"
-        app:layout_constraintStart_toEndOf="@+id/dateText"
-        app:layout_constraintTop_toBottomOf="@+id/profileTitle" />
-
-    <TextView
         android:id="@+id/kilometersDaily"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,7 +34,7 @@
         android:layout_marginTop="25dp"
         android:text="@string/kilometers"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateText" />
+        app:layout_constraintTop_toBottomOf="@+id/profileTitle" />
 
     <TextView
         android:id="@+id/kilometersDailyData"
@@ -63,7 +44,7 @@
         android:layout_marginTop="25dp"
         android:text="@string/kilometersNumber"
         app:layout_constraintStart_toEndOf="@+id/kilometersDaily"
-        app:layout_constraintTop_toBottomOf="@+id/dateInput" />
+        app:layout_constraintTop_toBottomOf="@+id/profileTitle" />
 
     <TextView
         android:id="@+id/stepsDaily"
@@ -94,10 +75,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dailyTime" />
+        app:layout_constraintTop_toBottomOf="@+id/overallTime" />
 
     <TextView
-        android:id="@+id/dailyTime"
+        android:id="@+id/overallTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
@@ -107,13 +88,13 @@
         app:layout_constraintTop_toBottomOf="@+id/stepsDaily" />
 
     <TextView
-        android:id="@+id/totalDailyTimeData"
+        android:id="@+id/totalTimeData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="25dp"
         android:text="@string/totalDailyTime"
-        app:layout_constraintStart_toEndOf="@+id/dailyTime"
+        app:layout_constraintStart_toEndOf="@+id/overallTime"
         app:layout_constraintTop_toBottomOf="@+id/stepsDailyData" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
