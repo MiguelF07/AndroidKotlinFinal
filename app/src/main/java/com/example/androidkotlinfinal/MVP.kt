@@ -48,7 +48,7 @@ class MVP {
             permissionsManager.requestUserLocation()
         }
         fun startTracking(){
-            locationProvider.trackUser()
+            locationProvider.startTracking()
         }
         fun stopTracking(){
             locationProvider.stopTracking()
