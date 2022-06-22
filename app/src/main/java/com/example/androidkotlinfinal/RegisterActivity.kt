@@ -54,7 +54,6 @@ class RegisterActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                     } else {
-                        println(task.exception.toString())
                         AlertDialog.Builder(this)
                             .setTitle("Registration Failed")
                             .setPositiveButton("Ok", null)

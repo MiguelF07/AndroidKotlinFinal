@@ -50,24 +50,6 @@ class LoginActivity : AppCompatActivity() {
                                 .show()
                         }
                     }
-                //                mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this, task -> {
-//                    System.out.println("IM HERE");
-//                    if(task.isSuccessful()) {
-//                        new AlertDialog.Builder(this)
-//                                .setTitle("Successfully Logged In")
-//                                .setPositiveButton("Ok",null)
-//                                .show();
-//                        Intent intent = new Intent(this, MainActivity.class);
-//                        startActivity(intent);
-//                        finish();
-//                    }
-//                    else {
-//                        new AlertDialog.Builder(this)
-//                                .setTitle("Login Failed")
-//                                .setPositiveButton("Ok",null)
-//                                .show();
-//                    }
-//                });
             }
         }
         registerButton.setOnClickListener { view: View? ->

@@ -108,12 +108,9 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback, SensorEventListener
                         Toast.LENGTH_LONG
                     ).show()
                     val document = task.result
-                    println("PRINTT")
                     val newKm = document.data?.get("kilometersDaily").toString().toInt() + localKilometers.text.toString().toInt()
                     val newSteps = document.data?.get("stepsDaily").toString().toInt() + localSteps.text.toString().toInt()
                     val newMinutes = document.data?.get("timeDaily").toString().toInt() + totalMinutes
-                    println(newMinutes)
-                    println(newKm.toString())
                     mAuth!!.uid?.let { it1 ->
                         db.collection("users")
                             .document(it1)
@@ -158,7 +155,6 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback, SensorEventListener
 
     private fun updateUi(ui:MapUi.Ui){
         if(ui.currentLocation != null && ui.currentLocation != map.cameraPosition.target){
-            println("entrei aqui")
             map.isMyLocationEnabled = true
 
 //            map.animateCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.Builder().target(map.cameraPosition.target).zoom(16f).build()))
@@ -209,7 +205,6 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback, SensorEventListener
 
     override fun onSensorChanged(sensorEvent: SensorEvent?) {
         sensorEvent ?: return
-        // Data 1: According to official documentation, the first value of the `SensorEvent` value is the step count
         sensorEvent.values.firstOrNull()?.let {
             if(!didGet){
                 stepsOnReboot = it.toInt()

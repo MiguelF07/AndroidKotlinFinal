@@ -40,8 +40,6 @@ class ProfileActivity : AppCompatActivity() {
         docIdRef!!.get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val document = task.result
-                println("PRINTT")
-                println(document)
                 document.data?.get("kilometersDaily")
                 kilometersData.text = document.data?.get("kilometersDaily").toString()
                 stepsData.text = document.data?.get("stepsDaily").toString()
