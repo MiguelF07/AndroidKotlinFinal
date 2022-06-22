@@ -10,11 +10,11 @@
         android:id="@+id/logoutButton"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="60dp"
         android:text="@string/logout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/routeHistory" />
+        app:layout_constraintTop_toBottomOf="@+id/overallTime" />
 
     <TextView
         android:id="@+id/profileTitle"
@@ -65,17 +65,6 @@
         android:text="@string/stepsNumber"
         app:layout_constraintStart_toEndOf="@+id/stepsDaily"
         app:layout_constraintTop_toBottomOf="@+id/kilometersDailyData" />
-
-    <Button
-        android:id="@+id/routeHistory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:text="@string/check_route_history"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/overallTime" />
 
     <TextView
         android:id="@+id/overallTime"
