@@ -19,13 +19,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.androidkotlinfinal.data.model.Stopwatch
 import com.example.androidkotlinfinal.databinding.ActivityMainBinding
-import com.example.androidkotlinfinal.ui.map.LocationProvider
-import com.example.androidkotlinfinal.ui.map.PermissionsManager
+import com.example.androidkotlinfinal.ui.map.Provider
+import com.example.androidkotlinfinal.ui.map.LocationPermissionManager
 import com.google.android.gms.maps.*
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.firebase.auth.FirebaseAuth
-import java.util.*
 
 class MainActivity : AppCompatActivity(),OnMapReadyCallback, SensorEventListener{
 
@@ -33,15 +33,15 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback, SensorEventListener
     private var stepsOnReboot = 0
     private var startMilliseconds = 0L
     private var didGet = false
-    private var presenter = MVP.MapPresenter(this)
-    private val locationProvider = LocationProvider(this)
-    private val permissionManager = PermissionsManager(this, locationProvider)
+    private var presenter = MapUi.MapUi(this)
+    private val lp = Provider(this)
+    private val manager = LocationPermissionManager(this, lp)
     private lateinit var mainHandler:Handler
     private var stopwatch = Stopwatch(0)
 
 
 
-    private var binding: ActivityMainBinding? = null
+    private var binder: ActivityMainBinding? = null
     private var mAuth: FirebaseAuth? = null
     private lateinit var map: GoogleMap
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,11 +55,11 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback, SensorEventListener
         } else {
             Toast.makeText(this, "Already logged in", Toast.LENGTH_LONG).show()
         }
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding!!.root)
+        binder = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binder!!.root)
 
         val profileButton = findViewById<View>(R.id.profileBtn) as Button
-        profileButton.setOnClickListener { view: View? ->
+        profileButton.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
@@ -69,10 +69,10 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback, SensorEventListener
         mapFragment.getMapAsync(this)
 
 
-        binding!!.startButton.setOnClickListener {
+        binder!!.startButton.setOnClickListener {
             startTracking()
         }
-        binding!!.endButton.setOnClickListener {
+        binder!!.endButton.setOnClickListener {
             stopTracking()
         }
         presenter.onViewCreated()
@@ -82,36 +82,35 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback, SensorEventListener
             sensorManager.registerListener(this@MainActivity, it, SensorManager.SENSOR_DELAY_FASTEST)
         }
 
-        val handler = Handler(Looper.myLooper()!!, )
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         presenter.ui.observe(this) {ui->
-            updateUi(ui);
+            updateUi(ui)
         }
 
         presenter.onMapLoaded()
         //1
-        locationProvider.liveLocation.observe(this) { latLng ->
-            map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18f))
+        lp.liveLocation.observe(this) { latLng ->
+            map.animateCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.Builder().target(latLng).zoom(16f).build()))
         }
 
-        //2
-        permissionManager.requestUserLocation()
+        manager.requestUserLocation()
 
         map.uiSettings.isZoomControlsEnabled = true
     }
 
-    private fun updateUi(ui:MVP.Ui){
+    private fun updateUi(ui:MapUi.Ui){
         if(ui.currentLocation != null && ui.currentLocation != map.cameraPosition.target){
             map.isMyLocationEnabled = true
-            map.animateCamera(CameraUpdateFactory.newLatLngZoom(ui.currentLocation, 18f))
-        }
-        binding?.kilometersNumber?.text = ui.formattedDistance
-        binding?.stepsNumber?.text = ui.formattedSteps
+            map.animateCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.Builder().target(ui.currentLocation).zoom(16f).build()))
 
-        drawRoute(ui.userPath)
+        }
+        binder?.kilometersNumber?.text = ui.uiDistance
+        binder?.stepsNumber?.text = ui.uiSteps
+
+        drawRoute(ui.pathing)
     }
     private fun drawRoute(locations : List<LatLng>){
         val polylineOptions = PolylineOptions()
@@ -133,13 +132,13 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback, SensorEventListener
             != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                 arrayOf(ACTIVITY_RECOGNITION),
-                99);
+                99)
         }
         mainHandler.post(object : Runnable {
             override fun run() {
                 stopwatch.setNewParameters(System.currentTimeMillis()-startMilliseconds)
                 mainHandler.postDelayed(this, 1000)
-                binding?.timeValue?.text = String.format("%2d:%2d:%2d", stopwatch.hours, stopwatch.minutes, stopwatch.seconds)
+                binder?.timeValue?.text = String.format("%2d:%2d:%2d", stopwatch.hours, stopwatch.minutes, stopwatch.seconds)
             }
         })
 
@@ -160,7 +159,7 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback, SensorEventListener
                 stepsOnReboot = it.toInt()
                 didGet = true
             }
-            presenter.ui.value = presenter.ui.value?.copy(formattedSteps = "${it.toInt()-stepsOnReboot}")
+            presenter.ui.value = presenter.ui.value?.copy(uiSteps = "${it.toInt()-stepsOnReboot}")
         }
 
     }

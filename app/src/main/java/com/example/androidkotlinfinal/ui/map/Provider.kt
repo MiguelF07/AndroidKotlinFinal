@@ -14,7 +14,7 @@ import kotlin.math.roundToInt
 
 @SuppressLint("MissingPermission")
 
-class LocationProvider(private val activity: AppCompatActivity) {
+class Provider(private val activity: AppCompatActivity) {
     private val fusedLocation by lazy { LocationServices.getFusedLocationProviderClient(activity) }
 
     private val locations = mutableListOf<LatLng>()

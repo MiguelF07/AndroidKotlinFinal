@@ -2,36 +2,36 @@ package com.example.androidkotlinfinal
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
-import com.example.androidkotlinfinal.ui.map.LocationProvider
-import com.example.androidkotlinfinal.ui.map.PermissionsManager
+import com.example.androidkotlinfinal.ui.map.Provider
+import com.example.androidkotlinfinal.ui.map.LocationPermissionManager
 import com.google.android.gms.maps.model.LatLng
 
-class MVP {
+class MapUi {
 
     data class Ui(
-        val formattedSteps : String,
-        val formattedDistance: String,
+        val uiSteps : String,
+        val uiDistance: String,
         val currentLocation : LatLng?,
-        val  userPath : List<LatLng>
+        val  pathing : List<LatLng>
         ) {
         companion object {
             val EMPTY = Ui(
-                formattedSteps = "0",
-                formattedDistance = "0",
+                uiSteps = "0",
+                uiDistance = "0",
                 currentLocation = null,
-                userPath = emptyList()
+                pathing = emptyList()
             )
         }
     }
 
-    class MapPresenter (private val activity:AppCompatActivity){
+    class MapUi (private val activity:AppCompatActivity){
         val ui = MutableLiveData(Ui.EMPTY)
-        private val locationProvider = LocationProvider(activity)
-        private val permissionsManager = PermissionsManager(activity, locationProvider)
+        private val locationProvider = Provider(activity)
+        private val permissionsManager = LocationPermissionManager(activity, locationProvider)
         fun onViewCreated(){
             locationProvider.liveLocations.observe(activity) { locations ->
                 val current = ui.value
-                ui.value = current?.copy(userPath = locations)
+                ui.value = current?.copy(pathing = locations)
             }
             locationProvider.liveLocation.observe(activity) { currentLocation ->
                 val current = ui.value
@@ -40,7 +40,7 @@ class MVP {
             locationProvider.liveDistance.observe(activity) { distance ->
                 val current = ui.value
                 val formattedDistance = activity.getString(R.string.distance_value, distance)
-                ui.value = current?.copy(formattedDistance=formattedDistance)
+                ui.value = current?.copy(uiDistance=formattedDistance)
             }
         }
 
