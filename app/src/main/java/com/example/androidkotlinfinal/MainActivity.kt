@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback, SensorEventListener
             val localKilometers = findViewById<View>(R.id.kilometersNumber) as TextView
             val localSteps = findViewById<View>(R.id.stepsNumber) as TextView
             Toast.makeText(
-                this@MainActivity,
+                this,
                 "Workout Started",
                 Toast.LENGTH_LONG
             ).show()
@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback, SensorEventListener
             docIdRef!!.get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(
-                        this@MainActivity,
+                        this,
                         "Workout Ended",
                         Toast.LENGTH_LONG
                     ).show()
@@ -120,6 +120,8 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback, SensorEventListener
                     };
                     localKilometers.text = "0"
                     localSteps.text = "0"
+                    didGet=false
+                    stepsOnReboot=0
                     currentTime.text = "0"
 
 

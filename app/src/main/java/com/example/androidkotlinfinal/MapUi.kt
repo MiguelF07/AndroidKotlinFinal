@@ -52,6 +52,7 @@ class MapUi {
         }
         fun stopTracking(){
             locationProvider.stopTracking()
+            ui.value = Ui.EMPTY
         }
     }
 
