@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -62,9 +63,36 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback{
 
 
         binding!!.startButton.setOnClickListener {
+            val localKilometers = findViewById<View>(R.id.kilometersNumber) as TextView
+            val localSteps = findViewById<View>(R.id.stepsNumber) as TextView
             startTracking()
+
         }
         binding!!.endButton.setOnClickListener {
+            val localKilometers = findViewById<View>(R.id.kilometersNumber) as TextView
+            val localSteps = findViewById<View>(R.id.stepsNumber) as TextView
+            val docIdRef = mAuth!!.uid?.let { db.collection("users").document(it) }
+            docIdRef!!.get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val document = task.result
+                    println("PRINTT")
+                    println(document)
+                    val newKm = document.data?.get("kilometersDaily").toString().toInt() + localKilometers.text.toString().toInt()
+                    val newSteps = document.data?.get("stepsDaily").toString().toInt() + localSteps.text.toString().toInt()
+                    println(newKm.toString())
+                    mAuth!!.uid?.let { it1 ->
+                        db.collection("users")
+                            .document(it1)
+                            .update(mapOf("kilometersDaily" to newKm,"stepsDaily" to newSteps))
+                    };
+                    localKilometers.text = "0"
+                    localSteps.text = "0"
+
+
+                } else {
+                    Log.d(mAuth!!.uid, "Failed with: ", task.exception)
+                }
+            }
             stopTracking()
         }
         presenter.onViewCreated()
