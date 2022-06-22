@@ -8,7 +8,7 @@ Upon lauching the app, you will presented with the login page where you can logi
 
 In case you do not want to create an account, there is already a default account with the following credentials:
 
-> **email:** miguel.r.ferreira@ua.pt
+> **email:** miguel.r.ferreira@ua.pt  
 > **password:** MiguelF07
 
 ### Main Page
