@@ -29,4 +29,6 @@
     <string name="check_route_history">Check Route History</string>
     <string name="total_daily_time">Total Daily Time:</string>
     <string name="totalDailyTime">02:00:03</string>
+    <string name="distance_value">%d meters</string>
+    <string name="steps_value">%d steps</string>
 </resources>
