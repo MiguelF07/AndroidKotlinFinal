@@ -46,7 +46,7 @@ class RegisterActivity : AppCompatActivity() {
                         )
                         val user = mAuth!!.currentUser
                         var uuid = user?.uid.toString()
-                        val map = mapOf("stepsDaily" to 0,"timeDaily" to 0,"currentKms" to 0,"currentSteps" to 0, "currentTime" to 0)
+                        val map = mapOf("kilometersDaily" to 0, "stepsDaily" to 0,"timeDaily" to 0,"currentKms" to 0,"currentSteps" to 0, "currentTime" to 0)
                         db.collection("users").document(uuid).set(map)
 
 

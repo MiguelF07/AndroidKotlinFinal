@@ -28,11 +28,6 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         mAuth = FirebaseAuth.getInstance()
-        val routesButton = findViewById<View>(R.id.routeHistory) as Button
-        routesButton.setOnClickListener { view: View? ->
-            val intent = Intent(this, HistoryRoutesActivity::class.java)
-            startActivity(intent)
-        }
 
         val kilometersData = findViewById<View>(R.id.kilometersDailyData) as TextView
         val stepsData = findViewById<View>(R.id.stepsDailyData) as TextView

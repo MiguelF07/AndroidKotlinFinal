@@ -65,6 +65,11 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback{
         binding!!.startButton.setOnClickListener {
             val localKilometers = findViewById<View>(R.id.kilometersNumber) as TextView
             val localSteps = findViewById<View>(R.id.stepsNumber) as TextView
+            Toast.makeText(
+                this@MainActivity,
+                "Workout Started",
+                Toast.LENGTH_LONG
+            ).show()
             startTracking()
 
         }
@@ -74,6 +79,11 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback{
             val docIdRef = mAuth!!.uid?.let { db.collection("users").document(it) }
             docIdRef!!.get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Workout Ended",
+                        Toast.LENGTH_LONG
+                    ).show()
                     val document = task.result
                     println("PRINTT")
                     println(document)
