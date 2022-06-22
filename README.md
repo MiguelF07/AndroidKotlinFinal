@@ -20,3 +20,7 @@ Upon clicking the `Start` button, you will be asked to give the activity permiss
 ### Profile
 
 On the main page you can click the `Profile` button that will redirect you to the profile page. Here you can see your overall statistics and you can also logout of the application.
+
+## APK
+
+The name of the APK is [app-debug.apk](./app-debug.apk)
